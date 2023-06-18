@@ -23,5 +23,11 @@ class Controller
     {
         return  Application::$app->view->renderViewContent($content);
     }
+    public function renderAdmin($view,array $params)
+
+    {
+       Application::$app->view->renderAdminView($view,$params);
+    }
+
 
 }
