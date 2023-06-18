@@ -41,10 +41,6 @@ foreach (glob(INCLUDEPATH."/system/Attributes/*.php") as $filename) {
     require_once $filename;
 }
 
-
-
-//xxxxxxxxxxx
-
 use App\System\Application;
 
 $app = new Application();
@@ -53,26 +49,5 @@ $app->runControllers([
     App\Controllers\Home::class,
     App\Controllers\Auth::class
 ]);
-
-//xxxxxxxxxx
-
-
-// use App\System\Application;
-
-// $app = new Application();
-
-
-// $app->run("/","home/index");
-// $app->run("/home","home/index");
-
-// $app->run("/login","auth/index");
-// $app->run("/login","auth/index","post");
-// $app->run("/register","auth/register","post");
-
-// $app->run("/getid/{id}","home/getIdTest");
-// $app->run("/getval/{val}","home/getValTest");
-// $app->run("/geturl/{url}", "home/getUrlTest");
-
-
     
 ob_end_flush();
