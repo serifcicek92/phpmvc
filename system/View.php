@@ -46,6 +46,11 @@ class View
 
         }
 
+        $className = ucfirst($layoutName);
+        require(INCLUDEPATH."/app/controllers/".$className."Controller.php");
+        $className = "App\Controllers\\".$className;
+        Application::$app->layoutClass = new $className;
+
         $viewContent = $this->renderViewOnly($view, $params);
 
         ob_start();
@@ -141,6 +146,11 @@ class View
             $layoutName = Application::$app->controller->layout;
 
         }
+
+        $className = ucfirst($layoutName);
+        require(INCLUDEPATH."/app/controllers/".$className."Controller.php");
+        $className = "App\Controllers\\".$className;
+        Application::$app->layoutClass = new $className;
 
         ob_start();
 

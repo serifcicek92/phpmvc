@@ -3,7 +3,7 @@ namespace App\System;
 
 use App\System\Application;
 
-abstract class Model
+abstract class Model extends DataBase
 {
     public const RULE_REQUIRED = 'required';
     public const RULE_EMAIL = 'email';
@@ -11,6 +11,7 @@ abstract class Model
     public const RULE_MAX = 'max';
     public const RULE_MATCH = 'match';
     public const RULE_UNIQUE = 'unique';
+    public const RULE_CHECHED = 'on';
 
     public string $errors = "";
 
@@ -63,11 +64,15 @@ abstract class Model
                     $rule['match'] = $this->getLabel($rule['match']);
                     $this->addErrorForRule($attribute,self::RULE_MATCH,$rule);
                 }
+                if ($ruleName===self::RULE_CHECHED && !$value) {
+
+                    $this->addErrorForRule($attribute,self::RULE_CHECHED);
+                }
                 if ($ruleName == self::RULE_UNIQUE) {
                     $className = $rule['class'];
                     $uniqueAttr = $rule['attribute'] ?? $attribute;
                     $tableName = $className::tableName();
-                    $statement = Application::$app->db->prepare("SELECT * FROM $tableName where $uniqueAttr = :attr");
+                    $statement = $this->db->prepare("SELECT * FROM $tableName where $uniqueAttr = :attr");
                     $statement->bindValue(":attr",$value);
                     $statement->execute();
                      $record = $statement->fetchObject();
@@ -103,6 +108,7 @@ abstract class Model
         self::RULE_MAX => 'Maksimum {max} karakter olmalıdır.',
         self::RULE_MATCH => 'bu alan {match} ile aynı olmalıdır.',
         self::RULE_UNIQUE => '{field} isimli kayıt zaten mevcut',
+        self::RULE_CHECHED => 'Bu Alanı Seçmeniz Gerekmektedir.'
         ];
     }
 

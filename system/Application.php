@@ -1,6 +1,7 @@
 <?php
 namespace App\System;
 
+use App\Controllers\Auth;
 use App\System\Controller;
 use App\System\Router;
 use App\System\View;
@@ -19,8 +20,11 @@ class Application
 
     public View $view;
 
-    public $classList = [];
 
+    public Functions $functions;
+    public Auth $auth;
+    public $classList = [];
+    public $layoutClass;
 
 
 
@@ -33,7 +37,8 @@ class Application
         self::$app=$this;
         $this->router = new Router();   
         $this->view =  new View();
-
+        $this->functions = new Functions();
+        $this->auth = new Auth();
     }
 
 
